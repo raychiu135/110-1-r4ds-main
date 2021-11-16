@@ -1,0 +1,228 @@
+---
+title: "week9"
+output: html_notebook
+---
+
+# 4.1 Class
+```{r}
+typeof(c("John", "Mary"))
+typeof(c(2, 3.1412))
+typeof(c(TRUE, TRUE, F))
+```
+
+```{r}
+class(c("John", "Mary"))
+class(c(2, 3.1412))
+class(c(TRUE, TRUE, F))
+```
+
+**class** is a categarisation method that categorisesdifferent values based on **what we can do with those values**
+
+* type: man and woman
+* class:difference based on skills. (plumber class, teacher class)
+
+```{r}
+# date time information
+dateTimeInfo <- "2021-01-01 12:03:33"
+typeof(dateTimeInfo)
+```
+
+```{r}
+class(dateTimeInfo)
+```
+
+```{r}
+dateTimeInfo + 20
+# character class value + 20
+```
+
+
+we can choose proper parsing function to teach R understand a date time value is more than a character--teach R understand a class called date/time.
+
+```{r}
+install.packages("lubridate")
+```
+
+```{r}
+dateTimeInfo2 <- lubridate::ymd_hms("2021-01-01 12:03:33")
+class(dateTimeInfo2)
+```
+
+* lubridate::ymd_hms is a parsing function to teach R understand date time.
+
+```{r}
+dateTimeInfo2 + lubridate::second(20)
+```
+
+type: how we store **row** information
+class: what we (R) can do with different informatin
+
+
+# 4.2 Common classes of object value
+
+```{r}
+commonClasses <- list()
+```
+
+* declare-then-add method to create a vector.
+
+```{r}
+# save three different atomic vectors
+commonClasses$character <- c("John", "Mary", "Bill")
+commonClasses$numeric <- c(2.3, 4, 7)
+commonClasses$logical <- c(TRUE, T, F, FALSE)
+```
+
+```{r}
+datetimeinfro2+lubridate::minutes(20)
+```
+
+```{r}
+commonClasses <- list()
+# save three different atomic vectors
+commonClasses$character <- c("John", "Mary", "Bill")
+commonClasses$numeric <- c(2.3, 4, 7)
+commonClasses$logical <- c(TRUE, T, F, FALSE)
+```
+
+```{r}
+# check each atomic vector class
+class(commonClasses$character) # name call on commonClasses to get its value then retrieve the element value whose element name is "character"
+
+class(commonClasses$numeric)
+class(commonClasses$logical)
+```
+
+## facter
+
+```{r}
+bloodTypes <- c("AB", "AB", "A", "B", "A", "A", "B", "O", "O", "AB")
+```
+
+```{r}
+bloodTypes_fct <- 
+  factor(bloodTypes)
+# after name call on bloodTypes
+#bloodTypes_fct <-
+#  factor(
+#    c("AB", "AB", "A", "B", "A", "A", "B", "O", "O", "AB")
+#  )
+
+
+```
+
+```{r}
+table(bloodTypes_fct)
+```
+
+```{r}
+table(bloodTypes)
+```
+
+```{r}
+levels(bloodTypes_fct)
+```
+
+```{r}
+levels(bloodTypes)
+```
+
+
+```{r}
+bloodTypes_fct_levelsSetup <- 
+  factor(bloodTypes, levels=c("A", "B", "O", "AB"))
+table(bloodTypes_fct_levelsSetup)
+```
+
+```{r}
+class(bloodTypes_fct_levelsSetup)
+```
+
+```{r}
+table(bloodTypes_fct_levelsSetup)
+```
+
+***
+
+```{r}
+household_income <- c("low income", "low income", "middle income", "low income", "high income", "middle income", "high income", "high income", "middle income", "middle income")
+```
+
+* low income < middle income < high income
+
+```{r}
+household_income_fct <- 
+  factor(household_income)
+levels(household_income_fct)
+```
+
+```{r}
+household_income_fct_levelsSetup <-
+  factor(household_income, levels = c("low income", "middle income", "high income"))
+```
+
+```{r}
+table(household_income_fct_levelsSetup)
+```
+
+```{r}
+household_income_fct_levelsSetup[[1]] # low income
+```
+
+```{r}
+household_income_fct_levelsSetup[[1]] < "middle income"
+```
+
+```{r}
+household_income_fct_levelsSetup_ordered[[1]] < "middle income"
+```
+
+* human would say yes, it is true.
+
+```{r}
+household_income_fct_levelsSetup[[1]] > "low income"
+```
+
+* human would no, it is not true (false)
+
+```{r}
+household_income_fct_levelsSetup_ordered <-
+  factor(
+    household_income, 
+    levels = c("low income", "middle income","high income"), 
+    ordered = TRUE# Is levels ordered? (from the smallest to the larges)
+    )
+```
+
+```{r}
+class(household_income_fct_levelsSetup_ordered)
+```
+
+```{r}
+class(household_income_fct)
+class(household_income_fct_levelsSetup)
+```
+
+
+```{r}
+commonClasses$ordered_factor <- household_income_fct_levelsSetup_ordered
+class(commonClasses$ordered_factor)
+```
+
+```{r}
+commonClasses$ordered_factor <- household_income_fct_levelsSetup
+class(commonClasses$factor)
+```
+
+```{r}
+household_income_fct_levelsSetup_ordered[[1]] > "middle income"
+household_income_fct_levelsSetup_ordered[[2]] < "high income"
+```
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
