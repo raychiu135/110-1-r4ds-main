@@ -1,0 +1,47 @@
+---
+title: "Exercise 4.3"
+output: html_notebook
+---
+Exercise 4.3 Data frame parsing exercise:
+
+1.Declare a list named dfExercise.
+
+```{r}
+dfExercise <- list()
+```
+
+The following feature-by-feature data set (dataSet1) collects name and age of three persons:
+
+```{r}
+dataSet1 <- list(
+  name=c("John", "Mary", "Ben"),
+  age=c(33, 45, NA)
+)
+dfExercise$data1 <-
+  data.frame(
+    dataSet1
+  )
+dfExercise
+```
+2.Please parse the data set into a data frame class and add the parsed data frame to dfExercise$data1.
+
+3.We want to add another feature to dataSet1 called children. We want:
+
+```{r}
+dataSet1$children <- list(
+  list(list()), 
+  list(list(),list()), 
+  list(list())
+)
+dataSet1$children[[1]][[1]] <- list(name="Jane", age=2)# shows the first person's 1st child: name is Jane, age is 2
+dataSet1$children[[2]][[1]] <- list(name="Bill", age=3)# shows the second person's 1st child: name is Bill, age =3
+dataSet1$children[[2]][[2]] <- list(name="Ken", age=0)# the second pseron's 2nd child: name is Ken, age=0
+dataSet1$children[[3]][[1]] <- list(name="William", age=10)# the 3rd person's 1st child: name is William, age =10
+dfExercise$data2 <-
+  data.frame(
+    dataSet1$children
+  )
+```
+
+4.After adding another feature to dataSet1, parse it to a data frame and save the value at dfExercise$data2.
+

@@ -1,0 +1,30 @@
+---
+title: "Exercise 4.2"
+output: html_notebook
+---
+
+Exercise 4.2 Tata corporate with head quarter in India Deli has two subsidiaries overseas. One is in Mykonos, Greece, and the other is in Boston, USA. It has to deal with the following task constant: receive time information from both subsidiaries and collect them all together with India time zone expression.
+
+Consider the following subsidiaries time information:
+```{r}
+subsidiaries <- list()
+subsidiaries$boston <- lubridate::ymd_hms(c("2020 Oct. 13 15:00:00", "2019 Apr. 10 09:30:00")) # boston time zone
+subsidiaries$mykonos <- lubridate::dmy_hms(c("14 Jan., 2021 03:27:00", "8 Aug., 2020 11:20:00")) # mykonos time zone
+
+subsidiaries_deli_india <-
+  lubridate::with_tz(
+    c(
+      subsidiaries$boston, 
+      subsidiaries$mykonos
+    ), 
+    tz="Asia/Kolkata"
+  )
+subsidiaries_deli_india
+
+```
+
+Put all four time observation in one atomic vector with date/time class and expressed in Deli India time zone.
+
+
+
+
