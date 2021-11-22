@@ -1,0 +1,20 @@
+---
+title: "Exercise 4.7"
+output: html_notebook
+---
+
+Exercise 4.7 The following is 5 to 9 in Persian language:
+
+```{r}
+c("۵", "۶", "۷", "۸", "۹")
+```
+
+How do you sum the following Persian numbers?
+
+```{r}
+persians <- factor(
+  c('۶','۹','۸','۹','۶','۸','۸','۵','۹','۹'), 
+  levels=c("۵", "۶", "۷", "۸", "۹")
+)
+sum(as.numeric(persians))
+```

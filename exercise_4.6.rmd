@@ -1,0 +1,14 @@
+---
+title: "Exercise 4.6"
+output: html_notebook
+---
+
+Exercise 4.6 How do you sum the following Chinese numbers?
+
+```{r}
+fct <- factor(
+  c('參','貮','貮','貮','壹','貮','參','貮','參','參'),
+  levels=c('壹','貮','參')
+)
+sum(as.numeric(fct))
+```
