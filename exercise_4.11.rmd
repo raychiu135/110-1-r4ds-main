@@ -1,0 +1,27 @@
+---
+title: "Exercise 4.11"
+output: html_notebook
+---
+
+Exercise 4.11 For the following two vectors:
+
+
+```{r}
+num_input <- 
+  c(1,NA,NA,1,1,NA,1,1,1,NA,NA,1,NA,NA,NA,1,NA,1,NA,1,1,1,1,NA,NA,NA,NA,NA,NA,1)
+chr_input <- 
+  c('NA','1','1','1','NA','NA','1','1','1','1','NA','1','NA','1','1','1','NA','NA','NA','1','NA','NA','NA','NA','NA','1','1','NA','NA','NA')
+```
+
+1.Find all NA’s locations in num_input.
+
+2.Find all 'NA'’s locations in chr_input. (Be careful. Only NA truly mean not available. 'NA' is an available value with character phrase NA as the value.)
+
+```{r}
+# 1
+which(is.na(num_input))
+
+# 2
+which(is.element(chr_input,'NA'))
+```
+
