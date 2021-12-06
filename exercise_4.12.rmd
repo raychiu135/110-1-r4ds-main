@@ -1,0 +1,36 @@
+---
+title: "Exercise 4.12"
+output: html_notebook
+---
+
+Exercise 4.12 Run exercise 3 from Exercise section to obtain drug.
+
+1. How many cases have 毒品品項 of 安非他命?
+
+2. How many cases have 毒品品項 belonging to the following set?
+
+```{r}
+drug <- list()
+drug$source[[1]] <- 
+  "https://docs.google.com/spreadsheets/d/17ID43N3zeXqCvbUrc_MbpgE6dH7BjLm8BHv8DUcpZZ4/edit?usp=sharing"
+drug$data <- 
+  googlesheets4::read_sheet(
+    drug$source[[1]]
+  )
+drugSet <- c('安非他命','甲基安非他命','二甲氧基安非他命(DMA)','左旋甲基安非他命','3,4-亞甲基雙氧安非他命(MDA)')
+```
+
+```{r}
+drug$data |> View()
+```
+
+```{r}
+# 1
+pick12_1 <- drug$data[[9]] == '安非他命'
+sum(pick12_1, na.rm = T)
+
+# 2
+pick12_2 <- drug$data[[9]] %in% drugSet
+sum(pick12_2, na.rm = T)
+```
+
