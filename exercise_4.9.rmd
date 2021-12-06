@@ -1,0 +1,25 @@
+---
+title: "Exercise 4.9"
+output: html_notebook
+---
+
+```{r}
+johnDoe <- list()
+johnDoe$source[[1]] <- "https://www.moj.gov.tw/2204/2771/2773/76135/post"
+johnDoe$source[[2]] <- "https://docs.google.com/spreadsheets/d/1g2AMop133lCAsmdPhsH3lA-tjiY5fkGIqXqwdknwEVk/edit?usp=sharing"
+googlesheets4::read_sheet(
+  johnDoe$source[[2]]
+) -> johnDoe$data
+```
+
+```{r}
+johnDoe$data |> View()
+```
+
+
+
+Exercise 4.9 Run exercise 1 from Exercise section to create johnDoe. How many dead bodies were discovered after year 2012 (exclude 2012)?
+```{r}
+pick9 <- johnDoe$data[[7]] > 101
+sum(pick9, na.rm = T)
+```

@@ -1,0 +1,25 @@
+---
+title: "Exercise 4.10"
+output: html_notebook
+---
+
+```{r}
+johnDoe <- list()
+johnDoe$source[[1]] <- "https://www.moj.gov.tw/2204/2771/2773/76135/post"
+johnDoe$source[[2]] <- "https://docs.google.com/spreadsheets/d/1g2AMop133lCAsmdPhsH3lA-tjiY5fkGIqXqwdknwEVk/edit?usp=sharing"
+googlesheets4::read_sheet(
+  johnDoe$source[[2]]
+) -> johnDoe$data
+```
+
+```{r}
+johnDoe$data |> View()
+```
+
+
+
+Exercise 4.10 How many dead bodies in johnDoe have age upper limit (年齡範圍上限) equal to 0?
+```{r}
+pick10 <- johnDoe$data[[4]] == 0
+sum(pick10, na.rm = T)
+```
