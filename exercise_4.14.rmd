@@ -1,0 +1,35 @@
+---
+title: "Exercise 4.14"
+output: html_notebook
+---
+
+Exercise 4.14 Get fraud$data from exercise 3 in Exercise section. The following questions exclude any NA.
+
+1. Convert 通報日期 to a date class. Is there any NA after conversion?
+
+2. How many LINE accounts were reported as a fraud after 2018 (i.e. starting from 2019-01-01)?
+
+3. How many LINE accounts were reported as a fraud between year 2019 and 2020?
+
+```{r}
+fraud <- list()
+fraud$source[[1]] <- "https://data.gov.tw/dataset/78432"
+fraud$source[[2]] <- "https://data.moi.gov.tw/MoiOD/System/DownloadFile.aspx?DATA=7F6BE616-8CE6-449E-8620-5F627C22AA0D"
+fraud$data <- readr::read_csv(fraud$source[[2]])
+```
+```{r}
+View(fraud$data)
+```
+
+```{r}
+# 1
+as.data.frame.POSIXct(fraud$data$通報日期)
+any(is.na(fraud$data$通報日期))
+# 2
+pick14_2 <- fraud$data$通報日期 >= lubridate::ymd("2019-01-01")
+sum(as.numeric(pick14_2), na.rm = T)
+# 3
+pick14_3 <- fraud$data$通報日期 >= lubridate::ymd("2019-01-01") & fraud$data$通報日期 < lubridate::ymd("2021-01-01")
+sum(as.numeric(pick14_3), na.rm = T)
+```
+
