@@ -27,16 +27,16 @@ Exercise 4.13 Regarding johnDoe in exercise 1 of Exercise section,
 3.For those whose death type (死亡方式描述) is 不詳 or 他殺, what are their discovered counties (發現縣市)? How many such bodies in each counties?
 ```{r}
 # 1
-pick11_1 <- !is.na(johnDoe$data$通報機關名稱)
-johnDoe$data$編號[which(pick11_1)]
-johnDoe$data[pick11_1, ] -> subsample
+pick13_1 <- !is.na(johnDoe$data$通報機關名稱)
+johnDoe$data$編號[which(pick13_1)]
+johnDoe$data[pick13_1, ] -> subsample
 View(subsample)
 # 2
-pick11_2 <- johnDoe$data$通報機關名稱 == "海巡隊"
-johnDoe$data$死亡方式描述 [which(pick11_2)]
-table(johnDoe$data$死亡方式描述 [which(pick11_2)])
+pick13_2 <- johnDoe$data$通報機關名稱 == "海巡隊"
+johnDoe$data$死亡方式描述 [which(pick13_2)]
+table(johnDoe$data$死亡方式描述 [which(pick13_2)])
 # 3
-pick11_3 <- johnDoe$data$死亡方式描述 == "不詳" | johnDoe$data$死亡方式描述 == "他殺"
-johnDoe$data$發現縣市 [which(pick11_3)]
-table(johnDoe$data$發現縣市 [which(pick11_3)])
+pick13_3 <- johnDoe$data$死亡方式描述 == "不詳" | johnDoe$data$死亡方式描述 == "他殺"
+johnDoe$data$發現縣市 [which(pick13_3)]
+table(johnDoe$data$發現縣市 [which(pick13_3)])
 ```
