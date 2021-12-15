@@ -23,9 +23,10 @@ View(fraud$data)
 
 ```{r}
 # 1
-pick14_1 <- lubridate::ymd(fraud$data$通報日期)
-any(is.na(pick14_1))
-## table(is.na(pick14_1))
+fraud$data$通報日期 |> class()
+fraud$data$通報日期 |> 
+  lubridate::ymd() -> fraud$data$通報日期
+any(is.na(fraud$data$通報日期))
 # 2
 pick14_2 <- fraud$data$通報日期 >= lubridate::ymd("2019-01-01")
 sum(as.numeric(pick14_2), na.rm = T)
