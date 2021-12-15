@@ -34,9 +34,3 @@ sum(as.numeric(pick14_2), na.rm = T)
 pick14_3 <- fraud$data$通報日期 >= lubridate::ymd("2019-01-01") & fraud$data$通報日期 < lubridate::ymd("2021-01-01")
 sum(as.numeric(pick14_3), na.rm = T)
 ```
-```{r}
-# westernDates <- as.numeric(ming_guoDates)
-pick14_1 <- lubridate::ymd(fraud$data$通報日期)
-table(is.na(pick14_1))
-```
-
