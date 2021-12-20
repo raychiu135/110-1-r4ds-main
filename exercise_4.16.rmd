@@ -1,0 +1,45 @@
+---
+title: "Exercise 4.16"
+output: html_notebook
+---
+
+```{r}
+johnDoe <- list()
+johnDoe$source[[1]] <- "https://www.moj.gov.tw/2204/2771/2773/76135/post"
+johnDoe$source[[2]] <- "https://docs.google.com/spreadsheets/d/1g2AMop133lCAsmdPhsH3lA-tjiY5fkGIqXqwdknwEVk/edit?usp=sharing"
+googlesheets4::read_sheet(
+  johnDoe$source[[2]]
+) -> johnDoe$data
+```
+
+```{r}
+johnDoe$data |> View()
+```
+
+
+
+Exercise 4.16 In johnDoe data set,
+
+1. Add a column called 發現日期 to johnDoe$data which is a date class vector.
+
+2. How many dead bodies have no discovered dates?
+
+3. Which month has the highest report number?
+
+```{r}
+# 1
+chr_dates <- paste(
+  johnDoe$data$發現年 + 1911, 
+  johnDoe$data$發現月, 
+  johnDoe$data$發現日, 
+  sep="-"
+)
+johnDoe$data$發現日期 <- lubridate::ymd(chr_dates)
+## johnDoe$data$發現日期 |> class()
+# 2
+sum(as.numeric(is.na(johnDoe$data$發現日期)))
+# 3
+## table(johnDoe$data$發現月)
+which.max(table(johnDoe$data$發現月))
+```
+

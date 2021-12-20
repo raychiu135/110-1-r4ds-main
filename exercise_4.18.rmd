@@ -1,0 +1,20 @@
+---
+title: "Exercise 4.18"
+output: html_notebook
+---
+
+Exercise 4.18 Summarise majors.
+
+```{r}
+majors <- c('economics','economics',NA,'economics','economics','economics','economics','statistics','law','economics','law')
+
+paste(
+  'Summarise majors: There are', 
+  length(majors), 'observations. Among them,', 
+  sum(majors %in% 'economics'), 'major economics,', 
+  sum(majors %in% 'statistics'), 'majors statistics and', 
+  sum(majors %in% 'law'), 'major law.', 
+  sum(majors %in% NA), 'person has missing major.', 
+  sep=' '
+  )
+```

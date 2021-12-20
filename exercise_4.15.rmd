@@ -1,0 +1,36 @@
+---
+title: "Exercise 4.15"
+output: html_notebook
+---
+
+```{r}
+johnDoe <- list()
+johnDoe$source[[1]] <- "https://www.moj.gov.tw/2204/2771/2773/76135/post"
+johnDoe$source[[2]] <- "https://docs.google.com/spreadsheets/d/1g2AMop133lCAsmdPhsH3lA-tjiY5fkGIqXqwdknwEVk/edit?usp=sharing"
+googlesheets4::read_sheet(
+  johnDoe$source[[2]]
+) -> johnDoe$data
+```
+
+```{r}
+johnDoe$data |> View()
+```
+
+
+
+Exercise 4.15 In johnDoe data,
+
+1. Find the subsample of those whose report unit (通報機關名稱) has the term “海巡隊” (i.e. detect “海巡隊”) in its name.
+
+2. How many different different 海巡隊 are there? Each reported how many dead bodies.
+
+```{r}
+# 1
+pick15_1 <- stringr::str_detect(johnDoe$data$通報機關名稱, "海巡隊")
+johnDoe$data[which(pick15_1), ] -> subsample
+View(subsample)
+# 2
+length(as.list(unique(johnDoe$data$通報機關名稱[which(pick15_1)])))
+table(johnDoe$data$通報機關名稱[which(pick15_1)])
+```
+

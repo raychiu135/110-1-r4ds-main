@@ -1,0 +1,49 @@
+---
+title: "Exercise 4.17"
+output: html_notebook
+---
+
+```{r}
+johnDoe <- list()
+johnDoe$source[[1]] <- "https://www.moj.gov.tw/2204/2771/2773/76135/post"
+johnDoe$source[[2]] <- "https://docs.google.com/spreadsheets/d/1g2AMop133lCAsmdPhsH3lA-tjiY5fkGIqXqwdknwEVk/edit?usp=sharing"
+googlesheets4::read_sheet(
+  johnDoe$source[[2]]
+) -> johnDoe$data
+```
+
+```{r}
+johnDoe$data |> View()
+```
+
+
+
+Exercise 4.17 In johnDoe data set,
+
+1. create a factor column called 發現季節 with levels, “spring”, “summer”, “fall” and "winter. They cover months 3-5 (for spring), 6-8 (for summer), 9-11 (for fall), and 12-2 (for winter)
+
+2. In each season, how many dead bodies were discovered?
+
+```{r}
+# 1
+johnDoe$data$發現季節 <- str(1315)
+{
+  pick_those = johnDoe$data$發現月 %in% c(3, 4, 5) 
+  johnDoe$data$發現季節[pick_those] = 'spring'
+  
+  pick_those = johnDoe$data$發現月 %in% c(6, 7, 8)
+  johnDoe$data$發現季節[pick_those] = 'summer'
+  
+  pick_those = johnDoe$data$發現月 %in% c(9, 10, 11)
+  johnDoe$data$發現季節[pick_those] = 'fall'
+  
+  pick_those = johnDoe$data$發現月 %in% c(12, 1, 2)
+  johnDoe$data$發現季節[pick_those] = 'winter'
+}
+johnDoe$data$發現季節 <- factor(
+  johnDoe$data$發現季節, 
+  levels=c("spring", "summer", "fall", "winter")
+)
+# 2
+table(johnDoe$data$發現季節)
+```
