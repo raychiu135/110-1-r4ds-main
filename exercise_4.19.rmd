@@ -42,19 +42,21 @@ browseURL(wdi$meta)
 pick19_1 = wdi$data$year == 2000
 sum(as.numeric(pick19_1))
 # 2
-allIso2c = unique(wdi$data$iso2c)
-pick19_2 = !(unique(wdi$data$iso2c) %in% iso2c_nonCountry)
+data2000 <- wdi$data |> subset(year==2000)
+View(data2000)
+allIso2c = unique(data2000$iso2c)
+pick19_2 = !(unique(data2000$iso2c) %in% iso2c_nonCountry)
 subsample = allIso2c[which(pick19_2)]
 subsample
 # 3
 length(subsample)
 # 4
-pick19_4_1 = length(wdi$data$EG.USE.PCAP.KG.OE)
-pick19_4_2 = sum(as.numeric(is.na(wdi$data$EG.USE.PCAP.KG.OE)))
-pick19_4_3 = min(wdi$data$EG.USE.PCAP.KG.OE, na.rm=T)
-pick19_4_4 = max(wdi$data$EG.USE.PCAP.KG.OE, na.rm=T)
-pick19_4_5 = median(wdi$data$EG.USE.PCAP.KG.OE, na.rm=T)
-pick19_4_6 = mean(wdi$data$EG.USE.PCAP.KG.OE, na.rm=T)
+pick19_4_1 = length(data2000$EG.USE.PCAP.KG.OE)
+pick19_4_2 = sum(as.numeric(is.na(data2000$EG.USE.PCAP.KG.OE)))
+pick19_4_3 = min(data2000$EG.USE.PCAP.KG.OE, na.rm=T)
+pick19_4_4 = max(data2000$EG.USE.PCAP.KG.OE, na.rm=T)
+pick19_4_5 = median(data2000$EG.USE.PCAP.KG.OE, na.rm=T)
+pick19_4_6 = mean(data2000$EG.USE.PCAP.KG.OE, na.rm=T)
 paste(
   'For Energy use (kg of oil equivalent per capita), there are', 
   pick19_4_1, 'observations with', 
