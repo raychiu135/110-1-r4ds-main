@@ -1,0 +1,59 @@
+---
+title: "Exercise 5.1"
+output: html_notebook
+---
+
+Exercise 5.1 Load the following data set:
+
+```{r}
+# Observation by observation
+concerts_obo <-
+  jsonlite::fromJSON("https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=17", simplifyDataFrame = F)
+```
+
+Data set concerts_obo has difference performance information as its observations. For each performance, there can be more than one show, and each show’s information is contained inside the observation’s showInfo element.
+
+1. How many shows does the 5th performance have?
+
+2. If we are to find out the number of shows for each performance, what is the .x-pattern?
+
+3. Find out the number of shows for each performance, and put the answer as an integer vector under analysis$number_of_shows. (i.e. analysis$number_of_shows[[5]] will show your answer in 1.)
+
+4. a data frame with columns, title, date, location and locationName, where title comes from each observation’s title, and the rest three are from each observation’s 1st showInfo. In addition, date column has to be “POSIXct” “POSIXt” class with Taipei time zone.
+
+```{r}
+# 1
+length(concerts_obo[[5]]$showInfo)
+# 2
+analysis$number_of_shows[[.x]] <-length(concerts_obo[[.x]]$showInfo)
+# 3
+analysis <- list()
+analysis$number_of_shows <- vector("integer", length(concerts_obo))
+for(.x in seq_along(concerts_obo)){
+  analysis$number_of_shows[[.x]] <-length(concerts_obo[[.x]]$showInfo)
+}
+analysis$number_of_shows
+# 4
+concerts_df <- data.frame(
+    columns=seq_along(concerts_obo), 
+    title=vector("character", length=length(concerts_obo)), 
+    date=vector("character", length=length(concerts_obo)), 
+    location=vector("character", length=length(concerts_obo)), 
+    locationName=vector("character", length=length(concerts_obo))
+  )
+concerts_df
+pick5_1_4 <- vector("logical", length(concerts_obo))
+for(.x in seq_along(concerts_obo)){
+  pick5_1_4[[.x]] <- length(concerts_obo[[.x]]$showInfo)!=0
+}
+## pick5_1_4
+for(.x in seq_along(concerts_obo)){
+  concerts_df$title[[.x]] <- concerts_obo[[.x]]$title
+  if(pick5_1_4[[.x]]==T){
+    concerts_df$date[[.x]] <- concerts_obo[[.x]]$showInfo[[1]]$time
+    lubridate::ymd_hms(concerts_df$date[[.x]], tz = "Asia/Taipei")
+    concerts_df$location[[.x]] <- concerts_obo[[.x]]$showInfo[[1]]$location
+    concerts_df$locationName[[.x]] <- concerts_obo[[.x]]$showInfo[[1]]$locationName
+  }
+}
+```

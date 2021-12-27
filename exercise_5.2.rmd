@@ -1,0 +1,47 @@
+---
+title: "Exercise 5.2"
+output: html_notebook
+---
+
+```{r}
+drug <- list()
+drug$source[[1]] <- 
+  "https://docs.google.com/spreadsheets/d/17ID43N3zeXqCvbUrc_MbpgE6dH7BjLm8BHv8DUcpZZ4/edit?usp=sharing"
+drug$data <- 
+  googlesheets4::read_sheet(
+    drug$source[[1]]
+  )
+```
+
+Exercise 5.2 Regarding the drug data from Exercise 4.8.
+
+1. For each kind of drug (毒品品項), what was the average amount of drug (the mean of 數量（淨重）_克) found?
+
+2. Add a column date to the data frame which is a date class created from the column 發生日期
+
+For the following question, we only consider those 毒品品項 that contains the words “安非他命”.
+
+3. For each year, what was the total amount found? (Apply lubridate::year() to date column will get you year)
+
+```{r}
+# 1
+pick5_2_1 <- list()
+for(.x in c(2:length(drug$data$weight_g))){
+  pick5_2_1[[.x-1]] <- drug$data$weight_g[[.x]]
+}
+mean(as.numeric(pick5_2_1))
+# 2
+pick5_2_2 <- vector("character", length=length(drug$data$weight_g))
+drug$data[,c("no", "type", "oc_dt", "date", "oc_addr", "oc_p1", "oc_p2", "oc_p3", "proc_no", "kind", "weight_g")]
+for(.x in c(2:length(drug$data$date))){
+  pick5_2_2[[.x]] <- as.numeric(drug$data$oc_dt[[.x]])+19110000
+}
+drug$data$date <- lubridate::ymd(pick5_2_2)
+# 3
+pick5_2_3 <-  vector("character", length=length(drug$data$date))
+for(.x in c(2:length(drug$data$date))){
+  pick5_2_3[[.x]] <- lubridate::year(drug$data$date[[.x]])
+}
+pick5_2_3[[1]] <- NA
+table(pick5_2_3)
+```

@@ -1,0 +1,47 @@
+---
+title: "Exercise 5.3"
+output: html_notebook
+---
+
+Exercise 5.3 It is very common that economic model has some equilibrium condition as the intersection of two straight lines, like demand and supply. They can be expressed as:
+demand: p_d(q)=a+bq
+supply: p_s(q)=c+dq
+In equilibrium,
+(p*, q*) satisfies p_d(q*)=p_s(q*) and p*=p_d(q*)=p_s(q*).
+
+If you solve for $q*$ and $p*$,
+q*=(a-c)/(d-b)
+p*=a+bq*.
+
+1. Run the following code and solve for equilibrium and save it in a list with two element names q_star and p_star. Each has its value in corresponding to q* and p* that your program solved.
+```{r}
+a=1; b=-3; c=0; d=1
+# 1
+q_star=(a-c)/(d-b)
+p_star=a+b*q_star
+q_star
+p_star
+```
+
+2. Create a function called solve_equilibrium so that the following code would work:
+```{r}
+# 2
+solve_equilibrium <- function(){
+  q_star=(a-c)/(d-b)
+  p_star=a+b*q_star
+  paste(p_star, q_star, sep='  ')
+}
+
+a=1; b=-3; c=0; d=1
+equilibrium1 <- solve_equilibrium()
+print(equilibrium1)
+
+a=2; b=-3; c=0; d=1
+equilibrium2 <- solve_equilibrium()
+print(equilibrium2)
+
+a=1; b=-3; c=0; d=1.5
+equilibrium3 <- solve_equilibrium()
+print(equilibrium3)
+```
+
