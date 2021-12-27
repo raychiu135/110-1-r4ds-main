@@ -41,7 +41,7 @@ concerts_df <- data.frame(
     location=vector("character", length=length(concerts_obo)), 
     locationName=vector("character", length=length(concerts_obo))
   )
-concerts_df
+## concerts_df
 pick5_1_4 <- vector("logical", length(concerts_obo))
 for(.x in seq_along(concerts_obo)){
   pick5_1_4[[.x]] <- length(concerts_obo[[.x]]$showInfo)!=0
