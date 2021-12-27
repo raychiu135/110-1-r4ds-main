@@ -17,21 +17,26 @@ p*=a+bq*.
 ```{r}
 a=1; b=-3; c=0; d=1
 # 1
-q_star=(a-c)/(d-b)
-p_star=a+b*q_star
-q_star
-p_star
+pick5_3_1=list(
+  q_star=(a-c)/(d-b), 
+  p_star=a+b*q_star
+)
+pick5_3_1
 ```
 
 2. Create a function called solve_equilibrium so that the following code would work:
 ```{r}
 # 2
-answer = vector("numeric", length=2)
+pick5_3_2=list(
+  q_star=numeric(1), 
+  p_star=numeric(1)
+)
 solve_equilibrium <- function(){
-  answer[1]=(a-c)/(d-b)
-  answer[2]=a+b*answer[1]
-  answer
+  pick5_3_2$q_star=(a-c)/(d-b)
+  pick5_3_2$p_star=a+b*pick5_3_2$q_star
+  pick5_3_2
 }
+
 a=1; b=-3; c=0; d=1
 equilibrium1 <- solve_equilibrium()
 print(equilibrium1)
