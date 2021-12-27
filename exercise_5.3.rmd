@@ -26,12 +26,12 @@ p_star
 2. Create a function called solve_equilibrium so that the following code would work:
 ```{r}
 # 2
+answer = vector("numeric", length=2)
 solve_equilibrium <- function(){
-  q_star=(a-c)/(d-b)
-  p_star=a+b*q_star
-  paste(p_star, q_star, sep='  ')
+  answer[1]=(a-c)/(d-b)
+  answer[2]=a+b*answer[1]
+  answer
 }
-
 a=1; b=-3; c=0; d=1
 equilibrium1 <- solve_equilibrium()
 print(equilibrium1)
