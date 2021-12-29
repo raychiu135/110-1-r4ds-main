@@ -17,24 +17,20 @@ p*=a+bq*.
 ```{r}
 a=1; b=-3; c=0; d=1
 # 1
-pick5_3_1=list(
-  q_star=(a-c)/(d-b), 
-  p_star=a+b*((a-c)/(d-b))
-)
-pick5_3_1
+q_star <- (a-c)/(d-b)
+p_star <- a+b*q_star
+equilibrium <- list("q_star"=q_star, "p_star"=p_star)
+equilibrium
 ```
 
 2. Create a function called solve_equilibrium so that the following code would work:
 ```{r}
 # 2
-pick5_3_2=list(
-  q_star=numeric(1), 
-  p_star=numeric(1)
-)
 solve_equilibrium <- function(){
-  pick5_3_2$q_star=(a-c)/(d-b)
-  pick5_3_2$p_star=a+b*((a-c)/(d-b))
-  pick5_3_2
+  q_star <- (a-c)/(d-b)
+  p_star <- a+b*q_star
+  equilibrium <- list("q_star"=q_star, "p_star"=p_star)
+  equilibrium
 }
 
 a=1; b=-3; c=0; d=1
