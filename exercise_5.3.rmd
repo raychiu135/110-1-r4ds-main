@@ -19,7 +19,7 @@ a=1; b=-3; c=0; d=1
 # 1
 pick5_3_1=list(
   q_star=(a-c)/(d-b), 
-  p_star=a+b*q_star
+  p_star=a+b*((a-c)/(d-b))
 )
 pick5_3_1
 ```
@@ -33,7 +33,7 @@ pick5_3_2=list(
 )
 solve_equilibrium <- function(){
   pick5_3_2$q_star=(a-c)/(d-b)
-  pick5_3_2$p_star=a+b*pick5_3_2$q_star
+  pick5_3_2$p_star=a+b*((a-c)/(d-b))
   pick5_3_2
 }
 
