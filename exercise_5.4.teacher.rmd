@@ -19,9 +19,9 @@ wdi$data <- googlesheets4::read_sheet(
 
 ```{r}
 data_set <- wdi$data 
-iso2c_nonCountry <- c('ZH','ZI','1A','S3','B8','V2','Z4','4E','T4','XC','Z7','7E','T7','EU','F1','XE','XD','XF','ZT','XH','XI','XG','V3','ZJ','XJ','T2','XL','XO','XM','XN','ZQ','XQ','T3','XP','XU','XY','OE','S4','S2','V4','V1','S1','8S','T5','ZG','ZF','T6','XT','1W')
+iso2c_nonCountry <- c('ZH','ZI','1A','S3','B8','V2','Z4','4E','T4','XC','Z7','7E','T7','EU','F1','XE','XD','XF','ZT','XH','XI','XG','V3','ZJ','XJ','T2','XL','XO','XM','XN','ZQ','XQ','T3','XP','XU','XY','OE','S4','S2','V4','V1','S1','8S','T5','ZG','ZF','T6','XT','1W') # pick those obs that are really a country
 pick_countries <- !(data_set$iso2c %in% iso2c_nonCountry)
-data_set[pick_countries, ]
+data_set[pick_countries, ] # subsample
 ```
 
 Use it to create a function remove_nonCountries so that any data frame, say df_example with iso2c in it can do the function call as the following to remove those non-country entries.
@@ -45,6 +45,9 @@ wdi$data |> remove_nonCountries() -> data_set
 data_set |> subset(year==2020) -> data_set2020 # it is the same as
 code = "SG.GEN.PARL.ZS"
 {
+  # data_set2020[[code]] # the same as
+  # data_set2020[["SG.GEN.PARL.ZS"]]
+  
   data_set2020[[code]] |> range(na.rm=T) -> output_range
   data_set2020[[code]] |> mean(na.rm=T) -> output_mean
   data_set2020[[code]] |> median(na.rm=T) -> output_median
@@ -57,6 +60,17 @@ code = "SG.GEN.PARL.ZS"
 ```
 
 Construct a function summarise_numerical which can be used to produce a summary data frame of mean, median, and range for any given data set (as input argument data_set) and a numerical feature column name (as input argument feature). In other words, with the help of summarise_numerical function, the above code chunk can be replace with
+
+```{r}
+# what the input arguments from function call
+# summarise_numerical(data_set=data_set2020, feature=code)
+# is doing inside the exercution environment
+data_set=data_set2020
+feature=code
+{
+  
+}
+```
 
 ```{r}
 summarise_numerical <- function(data_set, feature){
@@ -87,45 +101,45 @@ What is the year range in the data set? For each year compute the mean of this i
 
 ```{r}
 wdi$data |> remove_nonCountries() -> data_set
-data_set$year |> range(na.rm=T) -> year_range
-eachYearMean <- vector("numeric", length(year_range[[2]]-year_range[[1]]+1))
-i=1
-for (.x in year_range[[1]]:year_range[[2]]) {
-  data_set |> subset(year==.x) -> data_set.x
-  code = "SG.GEN.PARL.ZS"
-  data_set.x[[code]] |> mean(na.rm=T) -> eachYearMean[[i]]
-  i=i+1
+code = "SG.GEN.PARL.ZS"
+# rangge of year
+range(data_set$year, na.rm=T)
+
+# For each year compute the mean of this indicator across countries.
+# for each group question.
+data_set |> split(data_set$year) -> data_set_byYear
+# trend
+trend <- vector("numeric", length(data_set_byYear))
+for(.x in seq_along(data_set_byYear)){
+  #.x=2
+  data_set_byYear[[.x]][[code]] |> mean(na.rm=T) -> trend[[.x]]
 }
-i
-trendOfMeanIncreasing=TRUE
-for (j in 1:(i-2)) {
-  if(!is.nan(eachYearMean[[j]]) && !is.nan(eachYearMean[[j+1]])){
-    if(eachYearMean[[j]] > eachYearMean[[j+1]]){
-      trendOfMeanIncreasing=FALSE
-    }
-  }
-}
-year_range
-eachYearMean
-trendOfMeanIncreasing
+names(trend) <-  names(data_set_byYear)
+
+View(trend)
 ```
 
 4. Create a function get_meanTrendOverYears when do the following function call, it will return a vector of the mean of all countries’ given code feature value over the years, with years as element names. (That is if mean is 2, 3, 8 for year 2010, 2011, 2012, then the returned vector should be the named numeric vector c("2010"=2, "2011"=3, "2012"=8).)
 
 ```{r}
-wdi$data |> remove_nonCountries() -> data_set
 get_meanTrendOverYears <- function(data_set, code){
-  data_set$year |> range(na.rm=T) -> year_range
-  eachYearMean <- numeric()
-  i=1
-  for (.x in year_range[[1]]:year_range[[2]]) {
-    data_set |> subset(year==.x) -> data_set.x
-    code = "SG.GEN.PARL.ZS"
-    mean(data_set.x[[code]], na.rm=T) -> eachYearMean[[as.character(.x)]]
-    i=i+1
+  # For each year compute the mean of this indicator across countries.
+  # for each group question.
+  data_set |> split(data_set$year) -> data_set_byYear
+  # trend
+  trend <- vector("numeric", length(data_set_byYear))
+  for(.x in seq_along(data_set_byYear)){
+  #.x=2
+  data_set_byYear[[.x]][[code]] |> mean(na.rm=T) -> trend[[.x]]
   }
-  return(eachYearMean)
+  names(trend) <-  names(data_set_byYear)
+  # return(trend) # or
+  trend
 }
 
+wdi$data |> remove_nonCountries() -> data_set
+code = "SG.GEN.PARL.ZS"
+# rangge of year
+range(data_set$year, na.rm=T)
 get_meanTrendOverYears(data_set=data_set, code="SG.GEN.PARL.ZS")
 ```
